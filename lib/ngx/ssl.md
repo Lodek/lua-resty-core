@@ -24,6 +24,7 @@ Table of Contents
     * [get_tls1_version_str](#get_tls1_version_str)
     * [parse_pem_cert](#parse_pem_cert)
     * [parse_pem_priv_key](#parse_pem_priv_key)
+    * [engine_load_priv_key](#engine_load_priv_key)
     * [set_cert](#set_cert)
     * [set_priv_key](#set_priv_key)
     * [verify_client](#verify_client)
@@ -454,6 +455,28 @@ This function was first added in version `0.1.7`.
 
 [Back to TOC](#table-of-contents)
 
+engine_load_priv_key
+--------------------
+**syntax:** *priv_key, err = ssl.engine_load_priv_key(engine_id, priv_key_id)*
+
+**context:** *any*
+
+Attempts to load the specified private key (`priv_key_id`) from the `engine_id`
+OpenSSL Engine. Returns an opaque cdata pointer which can be used by
+[set_priv_key](#set_priv_key).
+
+This function behaves similarly to Nginx's `ssl_certificate_key` directive when
+the argument contains `engine:` as a prefix. Note that target engine should
+be previously initialized using Nginx's `ssl_engine` directive.
+
+In case of failures, returns `nil` and a string describing the error.
+
+This function can be called in any context.
+
+This function was first added in version `0.1.23`.
+
+[Back to TOC](#table-of-contents)
+
 set_cert
 --------
 **syntax:** *ok, err = ssl.set_cert(cert_chain)*
@@ -480,7 +503,7 @@ set_priv_key
 **context:** *ssl_certificate_by_lua&#42;*
 
 Sets the SSL private key opaque pointer returned by the
-[parse_pem_priv_key](#parse_pem_priv_key) function for the current SSL connection.
+[parse_pem_priv_key](#parse_pem_priv_key) or [engine_load_priv_key](#engine_load_priv_key) functions for the current SSL connection.
 
 Returns `true` on success, or a `nil` value and a string describing the error otherwise.
 

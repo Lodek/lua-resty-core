@@ -390,6 +390,16 @@ function _M.parse_pem_priv_key(pem)
 end
 
 
+function _M.engine_load_priv_key(engine_id, priv_key_id)
+    local pkey = ngx_lua_ffi_load_engine_priv_key(engine_id, priv_key_id, errmsg)
+    if pkey ~= nil then
+        return ffi_gc(pkey, ngx_lua_ffi_free_priv_key)
+    end
+
+    return nil, ffi_str(errmsg[0])
+end
+
+
 function _M.set_cert(cert)
     local r = get_request()
     if not r then
