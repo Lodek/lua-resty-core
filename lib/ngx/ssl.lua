@@ -86,6 +86,10 @@ if subsystem == 'http' then
 
     int ngx_http_lua_ffi_ssl_verify_client(void *r,
         void *cdata, int depth, char **err);
+
+    void *ngx_http_lua_ffi_load_engine_priv_key(const u_char *engine_id,
+        const u_char pkey_id, char **err);
+
     ]]
 
     ngx_lua_ffi_ssl_set_der_certificate =
@@ -107,6 +111,8 @@ if subsystem == 'http' then
     ngx_lua_ffi_free_cert = C.ngx_http_lua_ffi_free_cert
     ngx_lua_ffi_free_priv_key = C.ngx_http_lua_ffi_free_priv_key
     ngx_lua_ffi_ssl_verify_client = C.ngx_http_lua_ffi_ssl_verify_client
+    ngx_lua_ffi_load_engine_priv_key =
+        C.ngx_http_lua_ffi_load_engine_priv_key
 
 elseif subsystem == 'stream' then
     ffi.cdef[[
