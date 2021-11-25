@@ -466,8 +466,8 @@ OpenSSL Engine. Returns an opaque cdata pointer which can be used by
 [set_priv_key](#set_priv_key).
 
 This function behaves similarly to Nginx's `ssl_certificate_key` directive when
-the argument contains `engine:` as a prefix. Note that target engine should
-be previously initialized using Nginx's `ssl_engine` directive.
+the argument contains `engine:` as a prefix. Note that the `engine_id` should
+have been previously initialized by Nginx's `ssl_engine` directive.
 
 In case of failures, returns `nil` and a string describing the error.
 
